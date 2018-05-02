@@ -15,20 +15,10 @@
     height:582px;
     top: 10px;
 }
-#tabela1{
+#tabela{
     border: 1px solid black;
 }
-#novaKolona1{
-    width: 40px;
-    height: 40px;
-   padding: 5px;
-    border: 3px solid black;
-
-}
-#tabela2{
-    border: 1px solid black;
-}
-#novaKolona2{
+#novaKolona{
     width: 40px;
     height: 40px;
    padding: 5px;
