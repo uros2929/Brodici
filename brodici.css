@@ -1,28 +1,25 @@
 *html{ box-sizing:border-box; }
 * , *:before, *:after{ box-sizing:inherit; }
 
+#table {
+    display: flex;
+    flex-direction: row;
+}
 
-#tabla2{
-    position:relative;
-	margin:0 auto;
-	width:500px;
-    height:582px;
+.tabla {
+    padding: 50px;
 }
-#tabla1{
-    position:absolute;
-	margin:0 auto;
-	width:500px;
-    height:582px;
-    top: 10px;
+
+h1 {
+    text-align: center;
 }
-#tabela{
-    border: 1px solid black;
+table {
+    border: solid gray 2px;
+    border-collapse: collapse;
 }
-#novaKolona{
+td {
     width: 40px;
     height: 40px;
-   padding: 5px;
-    border: 3px solid black;
-
+    border: solid gray 1px;
 }
 
