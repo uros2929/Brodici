@@ -1,4 +1,4 @@
-var labels = {emptySpace: 0, ship: 1},
+var labels = {emptySpace: 0, ship: 1, reservedSpace: 2},
     table1 = createTable(),
     table2 = createTable(),
     igrac1 = 'Player 1',
@@ -43,6 +43,7 @@ function drawOnPage(table, player) {
             var cellInRow = document.createElement("td");
             if (table[row][cell] === 0) cellInRow.style.backgroundColor = "white";
             if (table[row][cell] === 1) cellInRow.style.backgroundColor = "black";
+            if (table[row][cell] === 2) cellInRow.style.backgroundColor = "silver"; //samo za testiranje
             cellInRow.setAttribute("id", row + "." + cell);
             rowInTable.appendChild(cellInRow);
         }
@@ -50,6 +51,72 @@ function drawOnPage(table, player) {
     }
     return tabla;
 }
+
+function findReservedSpace(table, cell) {
+    var i, j;
+    if ((cell[0] > 0 && cell[0] < 9) && (cell[1] > 0 && cell[1] < 9)) {
+        for (i = -1; i < 2; i++) {
+            for (j = -1; j < 2; j++) {
+                addReservedSpace(table, cell, i, j);
+            }
+        }
+    } else if (cell[0] === 0 && cell[1] === 0) {
+        for (i = 0; i < 2; i++) {
+            for (j = 0; j < 2; j++) {
+                addReservedSpace(table, cell, i, j);
+            }
+        }
+    } else if (cell[0] === 9 && cell[1] === 9) {
+        for (i = -1; i < 1; i++) {
+            for (j = -1; j < 1; j++) {
+                addReservedSpace(table, cell, i, j);
+            }
+        }
+    } else if (cell[0] === 0 && cell[1] === 9) {
+        for (i = 0; i < 2; i++) {
+            for (j = -1; j < 1; j++) {
+                addReservedSpace(table, cell, i, j);
+            }
+        }
+    } else if (cell[0] === 9 && cell[1] === 0) {
+        for (i = -1; i < 1; i++) {
+            for (j = 0; j < 2; j++) {
+                addReservedSpace(table, cell, i, j);
+            }
+        }
+    } else if (cell[0] === 0 && (cell[1] > 0 && cell[1] < 9)) {
+        for (i = 0; i < 2; i++) {
+            for (j = -1; j < 2; j++) {
+                addReservedSpace(table, cell, i, j);
+            }
+        }
+    } else if (cell[0] === 9 && (cell[1] > 0 && cell[1] < 9)) {
+        for (i = -1; i < 1; i++) {
+            for (j = -1; j < 2; j++) {
+                addReservedSpace(table, cell, i, j);
+            }
+        }
+    } else if ((cell[0] > 0 && cell[0] < 9) && cell[1] === 0) {
+        for (i = -1; i < 2; i++) {
+            for (j = 0; j < 2; j++) {
+                addReservedSpace(table, cell, i, j);
+            }
+        }
+    } else if ((cell[0] > 0 && cell[0] < 9) && cell[1] === 9) {
+        for (i = -1; i < 2; i++) {
+            for (j = -1; j < 1; j++) {
+                addReservedSpace(table, cell, i, j);
+            }
+        }
+    }
+}
+
+function addReservedSpace(table, cell, i, j) {
+    if (table[cell[0] + i][cell[1] + j] !== labels.ship) {
+        table[cell[0] + i][cell[1] + j] = labels.reservedSpace;
+    }
+}
+
 
 function randomShipsPosition(table) {
     var key;
@@ -61,13 +128,16 @@ function randomShipsPosition(table) {
             cell = Math.floor(Math.random() * 10),
             shipLength,
             shipPosition = [];
+
         if (direction === 0) {
             for (shipLength = 0; shipLength < ships[ship]; shipLength++) {
                 if (cell + ships[ship] <= table.length) {
                     table[row][cell + shipLength] = labels.ship;
+                    findReservedSpace(table, [row, cell + shipLength]);
                     shipPosition[shipLength] = [row, cell + shipLength];
                 } else {
                     table[row][cell - shipLength] = labels.ship;
+                    findReservedSpace(table, [row, cell - shipLength]);
                     shipPosition[shipLength] = [row, cell - shipLength];
                 }
             }
@@ -75,14 +145,16 @@ function randomShipsPosition(table) {
             for (shipLength = 0; shipLength < ships[ship]; shipLength++) {
                 if (row + ships[ship] <= table[0].length) {
                     table[row + shipLength][cell] = labels.ship;
+                    findReservedSpace(table, [row + shipLength, cell]);
                     shipPosition[shipLength] = [row + shipLength, cell];
                 } else {
                     table[row - shipLength][cell] = labels.ship;
+                    findReservedSpace(table, [row - shipLength, cell]);
                     shipPosition[shipLength] = [row - shipLength, cell];
                 }
             }
         }
-        shipsOnTable[key]["ship"+ship] = shipPosition;
+        shipsOnTable[key]["ship" + ship] = shipPosition;
     }
 }
 
