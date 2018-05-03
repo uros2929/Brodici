@@ -9,11 +9,28 @@ var shipsOnTable = {};
 randomShipsPosition(table1);
 randomShipsPosition(table2);
 
-document.getElementById("player1").innerHTML = drawOnPage(table1, "player1").outerHTML;
-document.getElementById("player2").innerHTML = drawOnPage(table2, "player2").outerHTML;
+document.getElementById("player1").innerHTML = drawOnPage(table1, "Player1").outerHTML;
+document.getElementById("player2").innerHTML = drawOnPage(table2, "Player2").outerHTML;
 
-document.getElementById("player1").addEventListener("click", targetingCell);
-document.getElementById("player2").addEventListener("click", targetingCell);
+//document.getElementById("player2").addEventListener("click", targetingCell);
+//document.getElementById("player1").addEventListener("click", targetingCell);
+document.getElementById("player1").addEventListener("mousedown", movingShips);
+
+function movingShips(event) {
+    if (event.target !== event.currentTarget) {
+        var tableID = event.currentTarget.id;
+        for (var key in shipsOnTable[tableID]) {
+            for (var element in shipsOnTable[tableID][key]) {
+                if (shipsOnTable[tableID][key][element].toString() === event.target.id.split("_").toString()) {
+                    console.log(key);
+                    console.log(shipsOnTable[tableID][key]);
+                    //logika
+                }
+            }
+        }
+    }
+    event.stopPropagation();
+}
 
 function targetingCell(event) {
     if (event.target !== event.currentTarget) {
@@ -38,13 +55,12 @@ function drawOnPage(table, player) {
     tabla.setAttribute("id", player);
     for (var row = 0; row < table.length; row++) {
         var rowInTable = document.createElement("tr");
-        rowInTable.setAttribute("id", player + "_" + row);
         for (var cell = 0; cell < table[row].length; cell++) {
             var cellInRow = document.createElement("td");
             if (table[row][cell] === 0) cellInRow.style.backgroundColor = "white";
             if (table[row][cell] === 1) cellInRow.style.backgroundColor = "black";
             if (table[row][cell] === 2) cellInRow.style.backgroundColor = "silver"; //samo za testiranje
-            cellInRow.setAttribute("id", row + "." + cell);
+            cellInRow.setAttribute("id", row + "_" + cell);
             rowInTable.appendChild(cellInRow);
         }
         tabla.appendChild(rowInTable);
@@ -119,7 +135,7 @@ function addReservedSpace(table, cell, i, j) {
 
 function randomShipsPosition(table) {
     var key;
-    table === table1 ? key = "Player1" : key = "Player2";
+    table === table1 ? key = "player1" : key = "player2";
     shipsOnTable[key] = [];
     for (var ship = 0; ship < ships.length; ship++) {
         var direction = Math.floor(Math.random() * 2),
@@ -157,7 +173,7 @@ function randomShipsPosition(table) {
             for (index = 0; index < shipPosition.length; index++) {
                 shipsOnTable[key]["ship" + ship] = shipPosition;
                 table[shipPosition[index][0]][shipPosition[index][1]] = labels.ship;
-                findReservedSpace(table, [shipPosition[index][0],shipPosition[index][1]]);
+                findReservedSpace(table, [shipPosition[index][0], shipPosition[index][1]]);
             }
         } else {
             ship--;
