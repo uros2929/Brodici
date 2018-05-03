@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="072c7029-1f44-41c3-a75d-5d5aa8f6ac08" name="Default" comment="promena plana xD" />
+    <list default="true" id="072c7029-1f44-41c3-a75d-5d5aa8f6ac08" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brodici.js" beforeDir="false" afterPath="$PROJECT_DIR$/brodici.js" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -14,20 +18,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="brodici.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="brodici.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/brodici.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="799">
-              <caret line="47" column="1" selection-start-line="47" selection-start-column="1" selection-end-line="47" selection-end-column="1" />
+            <state relative-caret-position="646">
+              <caret line="97" selection-start-line="97" selection-end-line="97" />
+              <folding>
+                <element signature="n#!!block;n#createTable#0" />
+                <element signature="n#!!block;n#drawOnPage#0" />
+                <element signature="n#!!block;n#koIgraPrvi#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="brodici.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/brodici.css">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="1" lean-forward="true" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+            <state>
+              <caret column="6" selection-start-column="6" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -53,6 +62,7 @@
         <option value="$PROJECT_DIR$/brodici.html" />
         <option value="$PROJECT_DIR$/brodici.css" />
         <option value="$PROJECT_DIR$/brodici.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -121,6 +131,8 @@
       <updated>1525297040949</updated>
       <workItem from="1525297042133" duration="1274000" />
       <workItem from="1525299980362" duration="875000" />
+      <workItem from="1525302588899" duration="3614000" />
+      <workItem from="1525343841614" duration="2213000" />
     </task>
     <task id="LOCAL-00001" summary="promena plana xD">
       <created>1525300488407</created>
@@ -136,23 +148,31 @@
       <option name="project" value="LOCAL" />
       <updated>1525300510554</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="dodao random poziciju (treba napraviti da ne postavlja na polje na kom se vec nalazi brod ili na napolje pored)">
+      <created>1525306074853</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1525306074853</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2149000" />
+    <option name="totallyTimeSpent" value="7976000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.500625" side_tool="true" visible="true" weight="0.3298292" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.499375" visible="true" weight="0.3298292" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50125" side_tool="true" weight="0.3298292" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49875" weight="0.3298292" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -172,27 +192,26 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="promena plana xD" />
-    <option name="LAST_COMMIT_MESSAGE" value="promena plana xD" />
+    <MESSAGE value="dodao random poziciju (treba napraviti da ne postavlja na polje na kom se vec nalazi brod ili na napolje pored)" />
+    <option name="LAST_COMMIT_MESSAGE" value="dodao random poziciju (treba napraviti da ne postavlja na polje na kom se vec nalazi brod ili na napolje pored)" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/brodici.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        <state relative-caret-position="952">
+          <caret line="56" column="23" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
+          <folding>
+            <element signature="n#!!block;n#createTable#0" />
+            <element signature="n#!!block;n#drawOnPage#0" />
+            <element signature="n#!!block;n#koIgraPrvi#0" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/brodiciSecondSolution.js">
+    <entry file="file://$PROJECT_DIR$/brodici.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="53" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/brodiciSecondSolution.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="53" selection-end-column="1" />
+        <state relative-caret-position="799">
+          <caret line="47" column="1" selection-start-line="47" selection-start-column="1" selection-end-line="47" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -212,8 +231,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/brodici.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="47" column="1" selection-start-line="47" selection-start-column="1" selection-end-line="47" selection-end-column="1" />
+        <state relative-caret-position="68">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/brodiciSecondSolution.js" />
+    <entry file="file://$PROJECT_DIR$/brodiciSecondSolution.js" />
+    <entry file="file://$PROJECT_DIR$/brodici.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/brodici.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/brodici.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="97" selection-start-line="97" selection-end-line="97" />
+          <folding>
+            <element signature="n#!!block;n#createTable#0" />
+            <element signature="n#!!block;n#drawOnPage#0" />
+            <element signature="n#!!block;n#koIgraPrvi#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="6" selection-start-column="6" selection-end-column="6" />
         </state>
       </provider>
     </entry>

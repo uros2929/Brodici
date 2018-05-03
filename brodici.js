@@ -1,9 +1,10 @@
-var labels = { emptySpace: 0, ship: 1 },
+var labels = {emptySpace: 0, ship: 1},
     table1 = createTable(),
     table2 = createTable(),
     igrac1 = 'Player 1',
     igrac2 = 'Player 2';
 var ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+var shipsOnTable = {};
 
 randomShipsPosition(table1);
 randomShipsPosition(table2);
@@ -51,28 +52,40 @@ function drawOnPage(table, player) {
 }
 
 function randomShipsPosition(table) {
+    var key;
+    table === table1 ? key = "Player1" : key = "Player2";
+    shipsOnTable[key] = [];
     for (var ship = 0; ship < ships.length; ship++) {
-        var direction = randomDirection(),
+        var direction = Math.floor(Math.random() * 2),
             row = Math.floor(Math.random() * 10),
             cell = Math.floor(Math.random() * 10),
-            shipLength;
+            shipLength,
+            shipPosition = [];
         if (direction === 0) {
             for (shipLength = 0; shipLength < ships[ship]; shipLength++) {
-                cell + ships[ship] <= table.length ? table[row][cell + shipLength] = labels.ship : table[row][cell - shipLength] = labels.ship;
+                if (cell + ships[ship] <= table.length) {
+                    table[row][cell + shipLength] = labels.ship;
+                    shipPosition[shipLength] = [row, cell + shipLength];
+                } else {
+                    table[row][cell - shipLength] = labels.ship;
+                    shipPosition[shipLength] = [row, cell - shipLength];
+                }
             }
         } else if (direction === 1) {
             for (shipLength = 0; shipLength < ships[ship]; shipLength++) {
-                row + ships[ship] <= table[0].length ? table[row + shipLength][cell] = labels.ship : table[row - shipLength][cell] = labels.ship;
+                if (row + ships[ship] <= table[0].length) {
+                    table[row + shipLength][cell] = labels.ship;
+                    shipPosition[shipLength] = [row + shipLength, cell];
+                } else {
+                    table[row - shipLength][cell] = labels.ship;
+                    shipPosition[shipLength] = [row - shipLength, cell];
+                }
             }
         }
-    }
-
-    
-
-    function randomDirection() {
-        return Math.floor(Math.random() * 2);
+        shipsOnTable[key]["ship"+ship] = shipPosition;
     }
 }
+
 function koIgraPrvi() {
     var prviIgra = Math.ceil(Math.random() * 2);
     if (prviIgra == 1) {
@@ -80,6 +93,6 @@ function koIgraPrvi() {
     } else {
         alert("Prvi na potezu je: " + igrac2);
     }
+}
 
-} 
 koIgraPrvi();
