@@ -117,7 +117,6 @@ function addReservedSpace(table, cell, i, j) {
     }
 }
 
-
 function randomShipsPosition(table) {
     var key;
     table === table1 ? key = "Player1" : key = "Player2";
@@ -127,34 +126,42 @@ function randomShipsPosition(table) {
             row = Math.floor(Math.random() * 10),
             cell = Math.floor(Math.random() * 10),
             shipLength,
+
             shipPosition = [];
 
         if (direction === 0) {
             for (shipLength = 0; shipLength < ships[ship]; shipLength++) {
                 if (cell + ships[ship] <= table.length) {
-                    table[row][cell + shipLength] = labels.ship;
-                    findReservedSpace(table, [row, cell + shipLength]);
                     shipPosition[shipLength] = [row, cell + shipLength];
                 } else {
-                    table[row][cell - shipLength] = labels.ship;
-                    findReservedSpace(table, [row, cell - shipLength]);
                     shipPosition[shipLength] = [row, cell - shipLength];
                 }
             }
         } else if (direction === 1) {
             for (shipLength = 0; shipLength < ships[ship]; shipLength++) {
                 if (row + ships[ship] <= table[0].length) {
-                    table[row + shipLength][cell] = labels.ship;
-                    findReservedSpace(table, [row + shipLength, cell]);
                     shipPosition[shipLength] = [row + shipLength, cell];
                 } else {
-                    table[row - shipLength][cell] = labels.ship;
-                    findReservedSpace(table, [row - shipLength, cell]);
                     shipPosition[shipLength] = [row - shipLength, cell];
                 }
             }
         }
-        shipsOnTable[key]["ship" + ship] = shipPosition;
+        var counter = 0,
+            index;
+        for (index = 0; index < shipPosition.length; index++) {
+            if (table[shipPosition[index][0]][shipPosition[index][1]] === labels.emptySpace) {
+                counter++;
+            }
+        }
+        if (counter === shipPosition.length) {
+            for (index = 0; index < shipPosition.length; index++) {
+                shipsOnTable[key]["ship" + ship] = shipPosition;
+                table[shipPosition[index][0]][shipPosition[index][1]] = labels.ship;
+                findReservedSpace(table, [shipPosition[index][0],shipPosition[index][1]]);
+            }
+        } else {
+            ship--;
+        }
     }
 }
 
@@ -167,4 +174,4 @@ function koIgraPrvi() {
     }
 }
 
-koIgraPrvi();
+//koIgraPrvi();
