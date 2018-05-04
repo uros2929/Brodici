@@ -25,7 +25,7 @@ function rotateShip(event) {
             for (var element in shipsOnTable[tableID][key].position) {
                 if (shipsOnTable[tableID][key].position[element].toString() === event.target.id.split("_").toString()) {
                     //console.log("key:", key, " direction:", shipsOnTable[tableID][key].direction);
-                    console.log("old position",shipsOnTable[tableID][key].position);
+                    console.log("old position", shipsOnTable[tableID][key].position);
                     var targetedShip = shipsOnTable[tableID][key].position;
                     var newPosition = [];
                     for (var index = 0; index < targetedShip.length; index++) {
@@ -35,7 +35,7 @@ function rotateShip(event) {
                             newPosition[index] = [targetedShip[index][0] - index, targetedShip[index][1] + index];
                         }
                     }
-                    console.log("new position",newPosition);
+                    console.log("new position", newPosition);
                     //upisati newPosition u tabelu
                 }
             }
@@ -95,67 +95,34 @@ function drawOnPage(table, player) {
 }
 
 function findReservedSpace(table, cell) {
-    var i, j;
     if ((cell[0] > 0 && cell[0] < 9) && (cell[1] > 0 && cell[1] < 9)) {
-        for (i = -1; i < 2; i++) {
-            for (j = -1; j < 2; j++) {
-                addReservedSpace(table, cell, i, j);
-            }
-        }
+        addReservedSpace(table, cell, -1, 2, -1, 2)
     } else if (cell[0] === 0 && cell[1] === 0) {
-        for (i = 0; i < 2; i++) {
-            for (j = 0; j < 2; j++) {
-                addReservedSpace(table, cell, i, j);
-            }
-        }
+        addReservedSpace(table, cell, 0, 2, 0, 2)
     } else if (cell[0] === 9 && cell[1] === 9) {
-        for (i = -1; i < 1; i++) {
-            for (j = -1; j < 1; j++) {
-                addReservedSpace(table, cell, i, j);
-            }
-        }
+        addReservedSpace(table, cell, -1, 1, -1, 1)
     } else if (cell[0] === 0 && cell[1] === 9) {
-        for (i = 0; i < 2; i++) {
-            for (j = -1; j < 1; j++) {
-                addReservedSpace(table, cell, i, j);
-            }
-        }
+        addReservedSpace(table, cell, 0, 2, -1, 1)
     } else if (cell[0] === 9 && cell[1] === 0) {
-        for (i = -1; i < 1; i++) {
-            for (j = 0; j < 2; j++) {
-                addReservedSpace(table, cell, i, j);
-            }
-        }
+        addReservedSpace(table, cell, -1, 1, 0, 2)
     } else if (cell[0] === 0 && (cell[1] > 0 && cell[1] < 9)) {
-        for (i = 0; i < 2; i++) {
-            for (j = -1; j < 2; j++) {
-                addReservedSpace(table, cell, i, j);
-            }
-        }
+        addReservedSpace(table, cell, 0, 2, -1, 2)
     } else if (cell[0] === 9 && (cell[1] > 0 && cell[1] < 9)) {
-        for (i = -1; i < 1; i++) {
-            for (j = -1; j < 2; j++) {
-                addReservedSpace(table, cell, i, j);
-            }
-        }
+        addReservedSpace(table, cell, -1, 1, -1, 2)
     } else if ((cell[0] > 0 && cell[0] < 9) && cell[1] === 0) {
-        for (i = -1; i < 2; i++) {
-            for (j = 0; j < 2; j++) {
-                addReservedSpace(table, cell, i, j);
-            }
-        }
+        addReservedSpace(table, cell, -1, 2, 0, 2)
     } else if ((cell[0] > 0 && cell[0] < 9) && cell[1] === 9) {
-        for (i = -1; i < 2; i++) {
-            for (j = -1; j < 1; j++) {
-                addReservedSpace(table, cell, i, j);
-            }
-        }
+        addReservedSpace(table, cell, -1, 2, -1, 1)
     }
 }
 
-function addReservedSpace(table, cell, i, j) {
-    if (table[cell[0] + i][cell[1] + j] !== labels.ship) {
-        table[cell[0] + i][cell[1] + j] = labels.reservedSpace;
+function addReservedSpace(table, cell, iEqual, iLess, jEqual, jLess) {
+    for (var i = iEqual; i < iLess; i++) {
+        for (var j = jEqual; j < jLess; j++) {
+            if (table[cell[0] + i][cell[1] + j] !== labels.ship) {
+                table[cell[0] + i][cell[1] + j] = labels.reservedSpace;
+            }
+        }
     }
 }
 
@@ -168,8 +135,9 @@ function randomShipsPosition(table) {
             row = Math.floor(Math.random() * 10),
             cell = Math.floor(Math.random() * 10),
             shipLength,
-
-            shipPosition = [];
+            shipPosition = [],
+            counter = 0,
+            index;
 
         if (direction === "horizontal") {
             for (shipLength = 0; shipLength < ships[ship]; shipLength++) {
@@ -188,8 +156,6 @@ function randomShipsPosition(table) {
                 }
             }
         }
-        var counter = 0,
-            index;
         for (index = 0; index < shipPosition.length; index++) {
             if (table[shipPosition[index][0]][shipPosition[index][1]] === labels.emptySpace) {
                 counter++;
