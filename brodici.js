@@ -15,15 +15,17 @@ document.getElementById("player2").innerHTML = drawOnPage(table2, "Player2").out
 //document.getElementById("player2").addEventListener("click");
 //document.getElementById("player1").addEventListener("click");
 document.getElementById("player1").addEventListener("dblclick", rotateShip);
+document.getElementById("player2").addEventListener("dblclick", rotateShip);
 
 function rotateShip(event) {
+    console.log(event.currentTarget.id);
     if (event.target !== event.currentTarget) {
         var tableID = event.currentTarget.id;
         for (var key in shipsOnTable[tableID]) {
             for (var element in shipsOnTable[tableID][key].position) {
                 if (shipsOnTable[tableID][key].position[element].toString() === event.target.id.split("_").toString()) {
                     //console.log("key:", key, " direction:", shipsOnTable[tableID][key].direction);
-                    console.log(shipsOnTable[tableID][key].position);
+                    console.log("old position",shipsOnTable[tableID][key].position);
                     var targetedShip = shipsOnTable[tableID][key].position;
                     var newPosition = [];
                     for (var index = 0; index < targetedShip.length; index++) {
@@ -33,7 +35,8 @@ function rotateShip(event) {
                             newPosition[index] = [targetedShip[index][0] - index, targetedShip[index][1] + index];
                         }
                     }
-                    console.log(newPosition);
+                    console.log("new position",newPosition);
+                    //upisati newPosition u tabelu
                 }
             }
         }
