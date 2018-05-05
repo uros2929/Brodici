@@ -1,42 +1,49 @@
-var labels = {emptySpace: 0, ship: 1, reservedSpace: 2},
-    table1 = createTable(),
+const labels = {emptySpace: 0, ship: 1, reservedSpace: 2};
+
+let table1 = createTable(),
     table2 = createTable(),
     igrac1 = 'Player 1',
-    igrac2 = 'Player 2';
-var ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
-var shipsOnTable = {};
+    igrac2 = 'Player 2',
+    ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1],
+    shipsOnTable = {};
 
 randomShipsPosition(table1);
 randomShipsPosition(table2);
 
-document.getElementById("player1").innerHTML = drawOnPage(table1, "Player1").outerHTML;
-document.getElementById("player2").innerHTML = drawOnPage(table2, "Player2").outerHTML;
+setInterval(() => {
+    document.getElementById("player1").innerHTML = drawOnPage(table1, "Player1").outerHTML;
+    document.getElementById("player2").innerHTML = drawOnPage(table2, "Player2").outerHTML;
+}, 1000);
 
-//document.getElementById("player2").addEventListener("click");
-//document.getElementById("player1").addEventListener("click");
 document.getElementById("player1").addEventListener("dblclick", rotateShip);
 document.getElementById("player2").addEventListener("dblclick", rotateShip);
 
 function rotateShip(event) {
-    console.log(event.currentTarget.id);
     if (event.target !== event.currentTarget) {
-        var tableID = event.currentTarget.id;
-        for (var key in shipsOnTable[tableID]) {
-            for (var element in shipsOnTable[tableID][key].position) {
-                if (shipsOnTable[tableID][key].position[element].toString() === event.target.id.split("_").toString()) {
-                    //console.log("key:", key, " direction:", shipsOnTable[tableID][key].direction);
-                    console.log("old position", shipsOnTable[tableID][key].position);
-                    var targetedShip = shipsOnTable[tableID][key].position;
-                    var newPosition = [];
-                    for (var index = 0; index < targetedShip.length; index++) {
-                        if (shipsOnTable[tableID][key].direction === "horizontal") {
-                            newPosition[index] = [targetedShip[index][0] + index, targetedShip[index][1] - index];
-                        } else if (shipsOnTable[tableID][key].direction === "vertical") {
-                            newPosition[index] = [targetedShip[index][0] - index, targetedShip[index][1] + index];
+        let player = event.currentTarget.id;
+        let table = player === "player1" ? table1 : table2;
+        for (let key in shipsOnTable[player]) {
+            let ship = shipsOnTable[player][key];
+            for (let shipElement of ship.position) {
+                if (shipElement.toString() === event.target.id.split("_").toString()) {
+                    let oldPosition = ship.position,
+                        oldDirection = ship.direction,
+                        newPosition = [],
+                        shipNumber = key;
+                    for (let index = 0; index < oldPosition.length; index++) {
+                        if (ship.direction === "horizontal") {
+                            newPosition[index] = [oldPosition[index][0] + index, oldPosition[index][1] - index];
+                        } else if (ship.direction === "vertical") {
+                            newPosition[index] = [oldPosition[index][0] - index, oldPosition[index][1] + index];
                         }
+                        if (newPosition[index][0] < 0 || newPosition[index][0] > 9 ||newPosition[index][1] < 0 || newPosition[index][1] > 9) return;
                     }
-                    console.log("new position", newPosition);
-                    //upisati newPosition u tabelu
+                    removeOldPosition(table, oldPosition, player, shipNumber);
+                    if (isPositionEmpty(newPosition, player, table) === true) {
+                        addRotatedShip(newPosition, oldDirection, player, table, shipNumber);
+                    } else {
+                        returnOldPositon(oldPosition, oldDirection, player, table, shipNumber);
+                    }
                 }
             }
         }
@@ -44,32 +51,73 @@ function rotateShip(event) {
     event.stopPropagation();
 }
 
-function moveShip(event) {
-    if (event.target !== event.currentTarget) {
-        var tableID = event.currentTarget.id;
-        for (var key in shipsOnTable[tableID]) {
-            for (var element in shipsOnTable[tableID][key].position) {
-                if (shipsOnTable[tableID][key].position[element].toString() === event.target.id.split("_").toString()) {
-                    //logika
-                }
-            }
-        }
+function addRotatedShip(newPosition, oldDirection, player, table, shipNumber) {
+    let newDirection;
+    oldDirection === "vertical" ? newDirection = "horizontal" : newDirection = "vertical";
+    shipsOnTable[player][shipNumber] = {
+        position: newPosition,
+        direction: newDirection
+    };
+    for (let cell = 0; cell < newPosition.length; cell++) {
+        table[newPosition[cell][0]][newPosition[cell][1]] = labels.ship;
     }
-    event.stopPropagation();
+    updateReservedSpace(table, player);
 }
 
-function targetingCell(event) {
-    if (event.target !== event.currentTarget) {
-        console.log("tabela: ", event.currentTarget.id, " polje: ", event.target.id);
+function removeOldPosition(table, oldPosition, player, shipNumber) {
+    delete shipsOnTable[player][shipNumber];
+    for (let cell = 0; cell < oldPosition.length; cell++) {
+        table[oldPosition[cell][0]][oldPosition[cell][1]] = labels.emptySpace;
     }
-    event.stopPropagation();
+    updateReservedSpace(table, player);
+}
+
+function updateReservedSpace(table, player) {
+    //remove old reserved space
+    for (let row = 0; row < table.length; row++) {
+        for (let column = 0; column < table[row].length; column++) {
+            if (table[row][column] !== labels.ship) table[row][column] = labels.emptySpace;
+        }
+    }
+    //add new reserved space
+    for (let ship in shipsOnTable[player]) {
+        let shipPosition = shipsOnTable[player][ship]["position"];
+        for (let position = 0; position < shipPosition.length; position++) {
+            let cell = shipPosition[position];
+            findReservedSpace(table, cell);
+        }
+    }
+}
+
+function returnOldPositon(oldPosition, oldDirection, player, table, shipNumber) {
+    shipsOnTable[player][shipNumber] = {
+        position: oldPosition,
+        direction: oldDirection
+    };
+    for (let cell = 0; cell < oldPosition.length; cell++) {
+        table[oldPosition[cell][0]][oldPosition[cell][1]] = labels.ship;
+    }
+    updateReservedSpace(table, player);
+}
+
+function isPositionEmpty(newShip, player, table) {
+    let counter = 0;
+    for (let cell = 0; cell < newShip.length; cell++) {
+        if (typeof table[newShip[cell][0]][newShip[cell][1]] === "undefined") {
+            console.log(table[newShip[cell][0]][newShip[cell][1]]);
+            return false;
+        }
+        if (table[newShip[cell][0]][newShip[cell][1]] === labels.emptySpace)
+            counter++;
+    }
+    return newShip.length === counter ;
 }
 
 function createTable() {
-    var table = [];
-    for (var hight = 0; hight < 10; hight++) {
+    let table = [];
+    for (let hight = 0; hight < 10; hight++) {
         table[hight] = [];
-        for (var width = 0; width < 10; width++) {
+        for (let width = 0; width < 10; width++) {
             table[hight][width] = labels.emptySpace;
         }
     }
@@ -77,12 +125,12 @@ function createTable() {
 }
 
 function drawOnPage(table, player) {
-    var tabla = document.createElement("table");
+    let tabla = document.createElement("table");
     tabla.setAttribute("id", player);
-    for (var row = 0; row < table.length; row++) {
-        var rowInTable = document.createElement("tr");
-        for (var cell = 0; cell < table[row].length; cell++) {
-            var cellInRow = document.createElement("td");
+    for (let row = 0; row < table.length; row++) {
+        let rowInTable = document.createElement("tr");
+        for (let cell = 0; cell < table[row].length; cell++) {
+            let cellInRow = document.createElement("td");
             if (table[row][cell] === 0) cellInRow.style.backgroundColor = "white";
             if (table[row][cell] === 1) cellInRow.style.backgroundColor = "black";
             if (table[row][cell] === 2) cellInRow.style.backgroundColor = "silver"; //samo za testiranje
@@ -117,8 +165,8 @@ function findReservedSpace(table, cell) {
 }
 
 function addReservedSpace(table, cell, iEqual, iLess, jEqual, jLess) {
-    for (var i = iEqual; i < iLess; i++) {
-        for (var j = jEqual; j < jLess; j++) {
+    for (let i = iEqual; i < iLess; i++) {
+        for (let j = jEqual; j < jLess; j++) {
             if (table[cell[0] + i][cell[1] + j] !== labels.ship) {
                 table[cell[0] + i][cell[1] + j] = labels.reservedSpace;
             }
@@ -127,11 +175,11 @@ function addReservedSpace(table, cell, iEqual, iLess, jEqual, jLess) {
 }
 
 function randomShipsPosition(table) {
-    var key;
+    let key;
     table === table1 ? key = "player1" : key = "player2";
     shipsOnTable[key] = [];
-    for (var ship = 0; ship < ships.length; ship++) {
-        var direction = Math.floor(Math.random() * 2) === 0 ? "horizontal" : "vertical",
+    for (let ship = 0; ship < ships.length; ship++) {
+        let direction = Math.floor(Math.random() * 2) === 0 ? "horizontal" : "vertical",
             row = Math.floor(Math.random() * 10),
             cell = Math.floor(Math.random() * 10),
             shipLength,
@@ -141,33 +189,36 @@ function randomShipsPosition(table) {
 
         if (direction === "horizontal") {
             for (shipLength = 0; shipLength < ships[ship]; shipLength++) {
-                if (cell + ships[ship] <= table.length) {
-                    shipPosition[shipLength] = [row, cell + shipLength];
-                } else {
-                    shipPosition[shipLength] = [row, cell - shipLength];
+                while (cell + ships[ship] >= table.length) {
+                    row = Math.floor(Math.random() * 10);
+                    cell = Math.floor(Math.random() * 10);
                 }
+                shipPosition[shipLength] = [row, cell + shipLength];
             }
         } else if (direction === "vertical") {
             for (shipLength = 0; shipLength < ships[ship]; shipLength++) {
-                if (row + ships[ship] <= table[0].length) {
-                    shipPosition[shipLength] = [row + shipLength, cell];
-                } else {
-                    shipPosition[shipLength] = [row - shipLength, cell];
+                while (row + ships[ship] >= table[0].length) {
+                    row = Math.floor(Math.random() * 10);
+                    cell = Math.floor(Math.random() * 10);
                 }
+                shipPosition[shipLength] = [row + shipLength, cell];
             }
         }
         for (index = 0; index < shipPosition.length; index++) {
+            let position = shipPosition[index];
             if (table[shipPosition[index][0]][shipPosition[index][1]] === labels.emptySpace) {
                 counter++;
             }
         }
         if (counter === shipPosition.length) {
             for (index = 0; index < shipPosition.length; index++) {
-                shipsOnTable[key]["ship" + ship] = {};
-                shipsOnTable[key]["ship" + ship]["position"] = shipPosition;
-                shipsOnTable[key]["ship" + ship]["direction"] = direction;
-                table[shipPosition[index][0]][shipPosition[index][1]] = labels.ship;
-                findReservedSpace(table, [shipPosition[index][0], shipPosition[index][1]]);
+                let position = shipPosition[index];
+                shipsOnTable[key]["ship" + ship] = {
+                    position: shipPosition,
+                    direction: direction
+                };
+                table[position[0]][position[1]] = labels.ship;
+                findReservedSpace(table, [position[0], position[1]]);
             }
         } else {
             ship--;
@@ -176,11 +227,11 @@ function randomShipsPosition(table) {
 }
 
 function koIgraPrvi() {
-    var prviIgra = Math.ceil(Math.random() * 2);
-    if (prviIgra == 1) {
-        alert("Prvi na potezu je: " + igrac1);
+    let prviIgra = Math.ceil(Math.random() * 2);
+    if (prviIgra === 1) {
+        return igrac1;
     } else {
-        alert("Prvi na potezu je: " + igrac2);
+        return igrac2;
     }
 }
 
