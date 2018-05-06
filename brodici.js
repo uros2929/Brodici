@@ -21,28 +21,25 @@ document.getElementById("player2").addEventListener("dblclick", rotateShip);
 function rotateShip(event) {
     if (event.target !== event.currentTarget) {
         let player = event.currentTarget.id;
-        let table = player === "player1" ? table1 : table2;
         for (let key in shipsOnTable[player]) {
             let ship = shipsOnTable[player][key];
             for (let shipElement of ship.position) {
                 if (shipElement.toString() === event.target.id.split("_").toString()) {
-                    let oldPosition = ship.position,
-                        oldDirection = ship.direction,
-                        newPosition = [],
-                        shipNumber = key;
-                    for (let index = 0; index < oldPosition.length; index++) {
-                        if (ship.direction === "horizontal") {
-                            newPosition[index] = [oldPosition[index][0] + index, oldPosition[index][1] - index];
-                        } else if (ship.direction === "vertical") {
-                            newPosition[index] = [oldPosition[index][0] - index, oldPosition[index][1] + index];
-                        }
-                        if (newPosition[index][0] < 0 || newPosition[index][0] > 9 ||newPosition[index][1] < 0 || newPosition[index][1] > 9) return;
-                    }
-                    removeOldPosition(table, oldPosition, player, shipNumber);
-                    if (isPositionEmpty(newPosition, player, table) === true) {
-                        addRotatedShip(newPosition, oldDirection, player, table, shipNumber);
+                    let targetProperties = {
+                        player: player,
+                        table: player === "player1" ? table1 : table2,
+                        oldPosition: ship.position,
+                        oldDirection: ship.direction,
+                        newPosition: 0,
+                        shipNumber: key
+                    };
+                    targetProperties.newPosition = createNewPosition(targetProperties);
+
+                    removeOldPosition(targetProperties);
+                    if (isPositionEmpty(targetProperties) === true) {
+                        addRotatedShip(targetProperties);
                     } else {
-                        returnOldPositon(oldPosition, oldDirection, player, table, shipNumber);
+                        returnOldPositon(targetProperties);
                     }
                 }
             }
@@ -51,66 +48,78 @@ function rotateShip(event) {
     event.stopPropagation();
 }
 
-function addRotatedShip(newPosition, oldDirection, player, table, shipNumber) {
-    let newDirection;
-    oldDirection === "vertical" ? newDirection = "horizontal" : newDirection = "vertical";
-    shipsOnTable[player][shipNumber] = {
-        position: newPosition,
-        direction: newDirection
-    };
-    for (let cell = 0; cell < newPosition.length; cell++) {
-        table[newPosition[cell][0]][newPosition[cell][1]] = labels.ship;
+function createNewPosition(obj) {
+    let newPosition = [];
+    for (let index = 0; index < obj.oldPosition.length; index++) {
+        let cell = obj.oldPosition[index],
+            newCell = newPosition[index];
+        if (obj.oldDirection === "horizontal") {
+            newCell = [cell[0] + index, cell[1] - index];
+        } else if (obj.oldDirection === "vertical") {
+            newCell = [cell[0] - index, cell[1] + index];
+        }
+        if (newCell[0] < 0 || newCell[0] > 9 || newCell[1] < 0 || newCell[1] > 9) return;
     }
-    updateReservedSpace(table, player);
+    return newPosition;
 }
 
-function removeOldPosition(table, oldPosition, player, shipNumber) {
-    delete shipsOnTable[player][shipNumber];
-    for (let cell = 0; cell < oldPosition.length; cell++) {
-        table[oldPosition[cell][0]][oldPosition[cell][1]] = labels.emptySpace;
+function addRotatedShip(obj) {
+    let newDirection;
+    obj.oldDirection === "vertical" ? newDirection = "horizontal" : newDirection = "vertical";
+    shipsOnTable[obj.player][obj.shipNumber] = {
+        position: obj.newPosition,
+        direction: newDirection
+    };
+    for (let cell = 0; cell < obj.newPosition.length; cell++) {
+        obj.table[obj.newPosition[cell][0]][obj.newPosition[cell][1]] = labels.ship;
     }
-    updateReservedSpace(table, player);
+    updateReservedSpace(obj.table, obj.player);
+}
+
+function removeOldPosition(obj) {
+    delete shipsOnTable[obj.player][obj.shipNumber];
+    for (let cell = 0; cell < obj.oldPosition.length; cell++) {
+        obj.table[obj.oldPosition[cell][0]][obj.oldPosition[cell][1]] = labels.emptySpace;
+    }
+    updateReservedSpace(obj.table, obj.player);
 }
 
 function updateReservedSpace(table, player) {
-    //remove old reserved space
-    for (let row = 0; row < table.length; row++) {
+    for (let row = 0; row < table.length; row++) { //remove old reserved space
         for (let column = 0; column < table[row].length; column++) {
             if (table[row][column] !== labels.ship) table[row][column] = labels.emptySpace;
         }
     }
-    //add new reserved space
-    for (let ship in shipsOnTable[player]) {
+    for (let ship in shipsOnTable[player]) { //add new reserved space
         let shipPosition = shipsOnTable[player][ship]["position"];
         for (let position = 0; position < shipPosition.length; position++) {
-            let cell = shipPosition[position];
-            findReservedSpace(table, cell);
+            addReservedSpace(table, shipPosition[position]);
         }
     }
 }
 
-function returnOldPositon(oldPosition, oldDirection, player, table, shipNumber) {
-    shipsOnTable[player][shipNumber] = {
-        position: oldPosition,
-        direction: oldDirection
+function returnOldPositon(obj) {
+    shipsOnTable[obj.player][obj.shipNumber] = {
+        position: obj.oldPosition,
+        direction: obj.oldDirection
     };
-    for (let cell = 0; cell < oldPosition.length; cell++) {
-        table[oldPosition[cell][0]][oldPosition[cell][1]] = labels.ship;
+    for (let cell = 0; cell < obj.oldPosition.length; cell++) {
+        obj.table[obj.oldPosition[cell][0]][obj.oldPosition[cell][1]] = labels.ship;
     }
-    updateReservedSpace(table, player);
+    updateReservedSpace(obj.table, obj.player);
 }
 
-function isPositionEmpty(newShip, player, table) {
+function isPositionEmpty(obj) {
     let counter = 0;
-    for (let cell = 0; cell < newShip.length; cell++) {
-        if (typeof table[newShip[cell][0]][newShip[cell][1]] === "undefined") {
-            console.log(table[newShip[cell][0]][newShip[cell][1]]);
+    for (let cell = 0; cell < obj.newPosition.length; cell++) {
+        let index = obj.newPosition[cell];
+        if (typeof obj.table[index[0]][index[1]] === "undefined") {
             return false;
         }
-        if (table[newShip[cell][0]][newShip[cell][1]] === labels.emptySpace)
+        if (obj.table[index[0]][index[1]] === labels.emptySpace)
             counter++;
     }
-    return newShip.length === counter ;
+    return obj.newPosition.length === counter ;
 }
 
 function createTable() {
@@ -142,31 +151,10 @@ function drawOnPage(table, player) {
     return tabla;
 }
 
-function findReservedSpace(table, cell) {
-    if ((cell[0] > 0 && cell[0] < 9) && (cell[1] > 0 && cell[1] < 9)) {
-        addReservedSpace(table, cell, -1, 2, -1, 2)
-    } else if (cell[0] === 0 && cell[1] === 0) {
-        addReservedSpace(table, cell, 0, 2, 0, 2)
-    } else if (cell[0] === 9 && cell[1] === 9) {
-        addReservedSpace(table, cell, -1, 1, -1, 1)
-    } else if (cell[0] === 0 && cell[1] === 9) {
-        addReservedSpace(table, cell, 0, 2, -1, 1)
-    } else if (cell[0] === 9 && cell[1] === 0) {
-        addReservedSpace(table, cell, -1, 1, 0, 2)
-    } else if (cell[0] === 0 && (cell[1] > 0 && cell[1] < 9)) {
-        addReservedSpace(table, cell, 0, 2, -1, 2)
-    } else if (cell[0] === 9 && (cell[1] > 0 && cell[1] < 9)) {
-        addReservedSpace(table, cell, -1, 1, -1, 2)
-    } else if ((cell[0] > 0 && cell[0] < 9) && cell[1] === 0) {
-        addReservedSpace(table, cell, -1, 2, 0, 2)
-    } else if ((cell[0] > 0 && cell[0] < 9) && cell[1] === 9) {
-        addReservedSpace(table, cell, -1, 2, -1, 1)
-    }
-}
-
-function addReservedSpace(table, cell, iEqual, iLess, jEqual, jLess) {
-    for (let i = iEqual; i < iLess; i++) {
-        for (let j = jEqual; j < jLess; j++) {
+function addReservedSpace(table, cell) {
+    for (let i = -1; i < 2; i++) {
+        for (let j = -1; j < 2; j++) {
+            if (table[cell[0] + i] === undefined || table[cell[0] + i][cell[1] + j] === undefined) continue;
             if (table[cell[0] + i][cell[1] + j] !== labels.ship) {
                 table[cell[0] + i][cell[1] + j] = labels.reservedSpace;
             }
@@ -205,7 +193,6 @@ function randomShipsPosition(table) {
             }
         }
         for (index = 0; index < shipPosition.length; index++) {
-            let position = shipPosition[index];
             if (table[shipPosition[index][0]][shipPosition[index][1]] === labels.emptySpace) {
                 counter++;
             }
@@ -218,7 +205,7 @@ function randomShipsPosition(table) {
                     direction: direction
                 };
                 table[position[0]][position[1]] = labels.ship;
-                findReservedSpace(table, [position[0], position[1]]);
+                addReservedSpace(table, [position[0], position[1]]);
             }
         } else {
             ship--;
