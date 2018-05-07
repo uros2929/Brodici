@@ -15,57 +15,135 @@ setInterval(() => {
     document.getElementById("player2").innerHTML = drawOnPage(table2, "Player2").outerHTML;
 }, 1000);
 
-document.getElementById("player1").addEventListener("dblclick", rotateShip);
-document.getElementById("player2").addEventListener("dblclick", rotateShip);
+turnOnListeners();
 
-function rotateShip(event) {
+function turnOnListeners() {
+    const [player1, player2] = [document.getElementById("player1"), document.getElementById("player2")];
+
+    player1.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+    }, false);
+    player2.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+    }, false);
+    player1.addEventListener("mousedown", createTargetProperties);
+    player2.addEventListener("mousedown", createTargetProperties);
+
+    player1.addEventListener("mouseup", doSomething);
+    player2.addEventListener("mouseup", doSomething);
+
+
+}
+
+function createTargetProperties(event) {
+    let targetProperties;
     if (event.target !== event.currentTarget) {
         let player = event.currentTarget.id;
         for (let key in shipsOnTable[player]) {
             let ship = shipsOnTable[player][key];
             for (let shipElement of ship.position) {
                 if (shipElement.toString() === event.target.id.split("_").toString()) {
-                    let targetProperties = {
+                    targetProperties = {
                         player: player,
                         table: player === "player1" ? table1 : table2,
                         oldPosition: ship.position,
                         oldDirection: ship.direction,
                         newPosition: 0,
-                        shipNumber: key
+                        shipNumber: key,
+                        lengthOfShip: ship.position.length,
+                        indexOfElement: ship.position.indexOf(shipElement)
                     };
-                    targetProperties.newPosition = createNewPosition(targetProperties);
-
-                    removeOldPosition(targetProperties);
-                    if (isPositionEmpty(targetProperties) === true) {
-                        addRotatedShip(targetProperties);
-                    } else {
-                        returnOldPositon(targetProperties);
-                    }
                 }
             }
         }
     }
+    localStorage.setItem("property", JSON.stringify(targetProperties));
+}
+
+function doSomething(event) {
+    let targetProperties = JSON.parse(localStorage.getItem("property"));
+    if (event.button === 0) {
+        moveShip(event, targetProperties);
+    } else if (event.button === 2) {
+        rotateShip(event, targetProperties);
+    }
+}
+
+function moveShip(event, targetProperties) {
+    targetProperties.newPosition = createNewMovedPosition(event, targetProperties);
+    removeOldPosition(targetProperties);
+    if (isPositionEmpty(targetProperties) === true) {
+        addTranslatedShip(targetProperties, "move");
+    } else {
+        returnOldPositon(targetProperties);
+    }
+    localStorage.removeItem("property");
+    event.preventDefault();
     event.stopPropagation();
 }
 
-function createNewPosition(obj) {
-    let newPosition = [];
-    for (let index = 0; index < obj.oldPosition.length; index++) {
-        let cell = obj.oldPosition[index],
-            newCell = newPosition[index];
-        if (obj.oldDirection === "horizontal") {
-            newCell = [cell[0] + index, cell[1] - index];
-        } else if (obj.oldDirection === "vertical") {
-            newCell = [cell[0] - index, cell[1] + index];
-        }
-        if (newCell[0] < 0 || newCell[0] > 9 || newCell[1] < 0 || newCell[1] > 9) return;
+function createNewMovedPosition(event, targetProperties) {
+    let newPosition = [],
+        newPlace = event.target.id.split("_"),
+        moveVertical = newPlace[0] - targetProperties.oldPosition[targetProperties.indexOfElement][0],
+        moveHorizontal = newPlace[1] - targetProperties.oldPosition[targetProperties.indexOfElement][1];
+
+    for (let index = 0; index < targetProperties.oldPosition.length; index++) {
+        newPosition[index] = [targetProperties.oldPosition[index][0] + moveVertical, targetProperties.oldPosition[index][1] + moveHorizontal];
     }
     return newPosition;
 }
 
-function addRotatedShip(obj) {
+function rotateShip(event, targetProperties) {
+    if (targetProperties.lengthOfShip !== 1) {
+        targetProperties.newPosition = createNewRotatedPosition(targetProperties);
+        removeOldPosition(targetProperties);
+        if (isPositionEmpty(targetProperties) === true) {
+            addTranslatedShip(targetProperties, "rotate");
+        } else {
+            returnOldPositon(targetProperties);
+        }
+    }
+    localStorage.removeItem("property");
+    event.stopPropagation();
+    event.preventDefault();
+}
+
+function createNewRotatedPosition(obj) {
+    let newPosition = [],
+        increment;
+    if (obj.indexOfElement === 0) {
+        increment = 0
+    }
+    else if (obj.indexOfElement === 1) {
+        increment = -1
+    }
+    else if (obj.indexOfElement === 2) {
+        increment = -2
+    }
+    else if (obj.indexOfElement === 3) {
+        increment = -3
+    }
+    for (let index = 0; index < obj.oldPosition.length; index++) {
+        let cell = obj.oldPosition[index];
+        if (obj.oldDirection === "horizontal") {
+            newPosition[index] = [cell[0] + increment, cell[1] - increment];
+        } else if (obj.oldDirection === "vertical") {
+            newPosition[index] = [cell[0] - increment, cell[1] + increment];
+        }
+        if (newPosition[index][0] < 0 || newPosition[index][0] > 9 || newPosition[index][1] < 0 || newPosition[index][1] > 9) return;
+        increment++;
+    }
+    return newPosition;
+}
+
+function addTranslatedShip(obj, rotateOrMove) {
     let newDirection;
-    obj.oldDirection === "vertical" ? newDirection = "horizontal" : newDirection = "vertical";
+    if (rotateOrMove === "rotate") {
+        obj.oldDirection === "vertical" ? newDirection = "horizontal" : newDirection = "vertical";
+    } else {
+        newDirection = obj.oldDirection;
+    }
     shipsOnTable[obj.player][obj.shipNumber] = {
         position: obj.newPosition,
         direction: newDirection
@@ -73,6 +151,7 @@ function addRotatedShip(obj) {
     for (let cell = 0; cell < obj.newPosition.length; cell++) {
         obj.table[obj.newPosition[cell][0]][obj.newPosition[cell][1]] = labels.ship;
     }
+    obj.player === "player1" ? table1 = obj.table : table2 = obj.table;
     updateReservedSpace(obj.table, obj.player);
 }
 
@@ -111,6 +190,7 @@ function returnOldPositon(obj) {
 
 function isPositionEmpty(obj) {
     let counter = 0;
+    if (typeof obj.newPosition === "undefined") return false;
     for (let cell = 0; cell < obj.newPosition.length; cell++) {
         let index = obj.newPosition[cell];
         if (typeof obj.table[index[0]][index[1]] === "undefined") {
@@ -119,7 +199,7 @@ function isPositionEmpty(obj) {
         if (obj.table[index[0]][index[1]] === labels.emptySpace)
             counter++;
     }
-    return obj.newPosition.length === counter ;
+    return obj.newPosition.length === counter;
 }
 
 function createTable() {
