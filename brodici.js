@@ -1,5 +1,4 @@
-const labels = {emptySpace: 0, ship: 1, reservedSpace: 2};
-
+const labels = {emptySpace: 0, ship: 1, reservedSpace: 2, selectedShip:3};
 let table1 = createTable(),
     table2 = createTable(),
     igrac1 = 'Player 1',
@@ -7,32 +6,31 @@ let table1 = createTable(),
     ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1],
     shipsOnTable = {};
 
-randomShipsPosition(table1);
-randomShipsPosition(table2);
+document.getElementById("start").addEventListener("submit", (event)=>{
+    event.preventDefault();
+    startGame();
+    document.getElementById("start").style.display = "none";
+    document.getElementById("table").style.display = "flex";
+});
 
-setInterval(() => {
-    document.getElementById("player1").innerHTML = drawOnPage(table1, "Player1").outerHTML;
-    document.getElementById("player2").innerHTML = drawOnPage(table2, "Player2").outerHTML;
-}, 1000);
-
-turnOnListeners();
+function startGame() {
+    randomShipsPosition(table1);
+    randomShipsPosition(table2);
+    setInterval(() => {
+        document.getElementById("player1").innerHTML = drawOnPage(table1, "Player1").outerHTML;
+        document.getElementById("player2").innerHTML = drawOnPage(table2, "Player2").outerHTML;
+    }, 100);
+    turnOnListeners();
+}
 
 function turnOnListeners() {
     const [player1, player2] = [document.getElementById("player1"), document.getElementById("player2")];
-
-    player1.addEventListener('contextmenu', (event) => {
-        event.preventDefault();
-    }, false);
-    player2.addEventListener('contextmenu', (event) => {
-        event.preventDefault();
-    }, false);
+    player1.addEventListener('contextmenu', (event) => {event.preventDefault();}, false);
+    player2.addEventListener('contextmenu', (event) => {event.preventDefault();}, false);
     player1.addEventListener("mousedown", createTargetProperties);
     player2.addEventListener("mousedown", createTargetProperties);
-
     player1.addEventListener("mouseup", doSomething);
     player2.addEventListener("mouseup", doSomething);
-
-
 }
 
 function createTargetProperties(event) {
@@ -58,6 +56,17 @@ function createTargetProperties(event) {
         }
     }
     localStorage.setItem("property", JSON.stringify(targetProperties));
+    colorSelectedShip(targetProperties, labels.selectedShip);
+}
+
+function colorSelectedShip(targetProperties, kind) {
+    let selectedShip = shipsOnTable[targetProperties.player][targetProperties.shipNumber].position;
+    for (let field = 0; field < selectedShip.length; field++){
+        for (let index = 0; index < selectedShip[field].length; index++){
+            let table = targetProperties.table;
+            table[selectedShip[field][0]][selectedShip[field][1]] = kind;
+        }
+    }
 }
 
 function doSomething(event) {
@@ -67,6 +76,7 @@ function doSomething(event) {
     } else if (event.button === 2) {
         rotateShip(event, targetProperties);
     }
+    localStorage.removeItem("property");
 }
 
 function moveShip(event, targetProperties) {
@@ -75,10 +85,8 @@ function moveShip(event, targetProperties) {
     if (isPositionEmpty(targetProperties) === true) {
         addTranslatedShip(targetProperties, "move");
     } else {
-        returnOldPositon(targetProperties);
+        returnOldPosition(targetProperties);
     }
-    localStorage.removeItem("property");
-    event.preventDefault();
     event.stopPropagation();
 }
 
@@ -101,12 +109,10 @@ function rotateShip(event, targetProperties) {
         if (isPositionEmpty(targetProperties) === true) {
             addTranslatedShip(targetProperties, "rotate");
         } else {
-            returnOldPositon(targetProperties);
+            returnOldPosition(targetProperties);
         }
     }
-    localStorage.removeItem("property");
     event.stopPropagation();
-    event.preventDefault();
 }
 
 function createNewRotatedPosition(obj) {
@@ -161,11 +167,13 @@ function removeOldPosition(obj) {
         obj.table[obj.oldPosition[cell][0]][obj.oldPosition[cell][1]] = labels.emptySpace;
     }
     updateReservedSpace(obj.table, obj.player);
+
 }
 
 function updateReservedSpace(table, player) {
     for (let row = 0; row < table.length; row++) { //remove old reserved space
         for (let column = 0; column < table[row].length; column++) {
+            if (table[row][column] === labels.selectedShip) table[row][column] = labels.ship;
             if (table[row][column] !== labels.ship) table[row][column] = labels.emptySpace;
         }
     }
@@ -177,7 +185,7 @@ function updateReservedSpace(table, player) {
     }
 }
 
-function returnOldPositon(obj) {
+function returnOldPosition(obj) {
     shipsOnTable[obj.player][obj.shipNumber] = {
         position: obj.oldPosition,
         direction: obj.oldDirection
@@ -185,6 +193,7 @@ function returnOldPositon(obj) {
     for (let cell = 0; cell < obj.oldPosition.length; cell++) {
         obj.table[obj.oldPosition[cell][0]][obj.oldPosition[cell][1]] = labels.ship;
     }
+    obj.player === "player1" ? table1 = obj.table : table2 = obj.table;
     updateReservedSpace(obj.table, obj.player);
 }
 
@@ -220,9 +229,11 @@ function drawOnPage(table, player) {
         let rowInTable = document.createElement("tr");
         for (let cell = 0; cell < table[row].length; cell++) {
             let cellInRow = document.createElement("td");
-            if (table[row][cell] === 0) cellInRow.style.backgroundColor = "white";
-            if (table[row][cell] === 1) cellInRow.style.backgroundColor = "black";
-            if (table[row][cell] === 2) cellInRow.style.backgroundColor = "silver"; //samo za testiranje
+            if (table[row][cell] === labels.emptySpace) cellInRow.style.backgroundColor = "white";
+            if (table[row][cell] === labels.ship) cellInRow.style.backgroundColor = "black";
+            if (table[row][cell] === labels.reservedSpace) cellInRow.style.backgroundColor = "white"; //samo za testiranje
+            if (table[row][cell] === labels.selectedShip) cellInRow.style.border = "solid yellow 1px";
+            if (table[row][cell] === labels.selectedShip) cellInRow.style.backgroundColor = "yellow";
             cellInRow.setAttribute("id", row + "_" + cell);
             rowInTable.appendChild(cellInRow);
         }
