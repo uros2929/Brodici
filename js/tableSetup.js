@@ -20,7 +20,6 @@ let tableSetup = {
                 }
             }
         }
-        this.colorSelectedShip(player1.table, targetProperties, "on");
         return targetProperties;
     },
 
@@ -34,7 +33,7 @@ let tableSetup = {
                 myTable[selectedShip[field][0]][selectedShip[field][1]] = type;
             }
         }
-        player1.table = myTable;
+        return myTable;
     },
 
     rotateOrMoveShip: function (event, targetProperties, rotateOrMove) {
@@ -49,7 +48,6 @@ let tableSetup = {
         } else {
             this.returnOldPosition(targetProperties);
         }
-        this.colorSelectedShip(player1.table, targetProperties, "off");
     },
 
     doSomething: function (event, targetProperties) {
