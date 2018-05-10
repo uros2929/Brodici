@@ -51,6 +51,16 @@ form{
     margin: auto;
 }
 
+.positionBtns {
+    display: block;
+    margin: 20px auto;
+    padding: 5px;
+    width: 200px;
+    text-align: center;
+    background-color: white;
+    border-radius: 5px;
+}
+
 h1 {
     font-family: Candara;
     text-align: center;
