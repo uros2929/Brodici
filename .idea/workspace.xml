@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="072c7029-1f44-41c3-a75d-5d5aa8f6ac08" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brodici.html" beforeDir="false" afterPath="$PROJECT_DIR$/brodici.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/brodici.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/brodici.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/tableSetup.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/tableSetup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style/brodici.css" beforeDir="false" afterPath="$PROJECT_DIR$/style/brodici.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,51 +17,25 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="brodici.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/brodici.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="40" column="34" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="brodici.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/style/brodici.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="55" column="14" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="brodici.js" pinned="false" current-in-tab="true">
+    <leaf>
+      <file leaf-file-name="brodici.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/brodici.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="74" column="77" lean-forward="true" selection-start-line="74" selection-start-column="77" selection-end-line="74" selection-end-column="77" />
+            <state relative-caret-position="373">
+              <caret line="99" column="94" selection-start-line="99" selection-start-column="94" selection-end-line="99" selection-end-column="94" />
               <folding>
-                <element signature="e#4251#4301#0" />
+                <element signature="e#402#682#0" />
+                <element signature="n#!!block;n#startTheBattle#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ajaxStorage.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/ajaxStorage.js">
+      <file leaf-file-name="brodici.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/brodici.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="35" selection-start-line="1" selection-start-column="35" selection-end-line="1" selection-end-column="35" />
+            <state relative-caret-position="544">
+              <caret line="32" column="22" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -71,23 +43,8 @@
       <file leaf-file-name="tableSetup.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/tableSetup.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="61" column="73" selection-start-line="61" selection-start-column="73" selection-end-line="61" selection-end-column="73" />
-              <folding>
-                <element signature="n#!!block;n#createTargetProperties#0;n#createTargetProperties#0;n#!!block;n#tableSetup#0;n#!!top" />
-                <element signature="n#!!block;n#colorSelectedShip#0;n#colorSelectedShip#0;n#!!block;n#tableSetup#0;n#!!top" />
-                <element signature="n#!!block;n#rotateOrMoveShip#0;n#rotateOrMoveShip#0;n#!!block;n#tableSetup#0;n#!!top" />
-                <element signature="n#!!block;n#doSomething#0;n#doSomething#0;n#!!block;n#tableSetup#0;n#!!top" />
-                <element signature="n#!!block;n#createNewMovedPosition#0;n#createNewMovedPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-                <element signature="n#!!block;n#createNewRotatedPosition#0;n#createNewRotatedPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-                <element signature="n#!!block;n#addTranslatedShip#0;n#addTranslatedShip#0;n#!!block;n#tableSetup#0;n#!!top" />
-                <element signature="n#!!block;n#removeOldPosition#0;n#removeOldPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-                <element signature="n#!!block;n#updateReservedSpace#0;n#updateReservedSpace#0;n#!!block;n#tableSetup#0;n#!!top" />
-                <element signature="n#!!block;n#returnOldPosition#0;n#returnOldPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-                <element signature="n#!!block;n#isPositionEmpty#0;n#isPositionEmpty#0;n#!!block;n#tableSetup#0;n#!!top" />
-                <element signature="n#!!block;n#addReservedSpace#0;n#addReservedSpace#0;n#!!block;n#tableSetup#0;n#!!top" />
-                <element signature="n#!!block;n#randomShipsPosition#0;n#randomShipsPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-              </folding>
+            <state relative-caret-position="408">
+              <caret line="59" selection-start-line="59" selection-end-line="59" />
             </state>
           </provider>
         </entry>
@@ -104,7 +61,9 @@
       <find>con</find>
       <find>isposition</find>
       <find>Z</find>
+      <find>cons</find>
       <find>console</find>
+      <find>consol</find>
     </findStrings>
     <replaceStrings>
       <replace>ship</replace>
@@ -123,9 +82,9 @@
         <option value="$PROJECT_DIR$/brodici.js" />
         <option value="$PROJECT_DIR$/tableSetup.js" />
         <option value="$PROJECT_DIR$/brodici.css" />
-        <option value="$PROJECT_DIR$/js/tableSetup.js" />
         <option value="$PROJECT_DIR$/style/brodici.css" />
         <option value="$PROJECT_DIR$/brodici.html" />
+        <option value="$PROJECT_DIR$/js/tableSetup.js" />
         <option value="$PROJECT_DIR$/js/brodici.js" />
       </list>
     </option>
@@ -222,7 +181,9 @@
       <workItem from="1525870869116" duration="1803000" />
       <workItem from="1525899727303" duration="143000" />
       <workItem from="1525966377814" duration="6000" />
-      <workItem from="1525980574436" duration="5824000" />
+      <workItem from="1525980574436" duration="5988000" />
+      <workItem from="1525990896135" duration="2153000" />
+      <workItem from="1526034808338" duration="197000" />
     </task>
     <task id="LOCAL-00001" summary="promena plana xD">
       <created>1525300488407</created>
@@ -343,11 +304,18 @@
       <option name="project" value="LOCAL" />
       <updated>1525872655059</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="zavrseno pozicioniranje">
+      <created>1525986832391</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1525986832391</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="135807000" />
+    <option name="totallyTimeSpent" value="138321000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -394,11 +362,12 @@
     <MESSAGE value="background i jos nesto malo.." />
     <MESSAGE value="izmene" />
     <MESSAGE value="nesto malo menjao" />
-    <option name="LAST_COMMIT_MESSAGE" value="nesto malo menjao" />
+    <MESSAGE value="zavrseno pozicioniranje" />
+    <option name="LAST_COMMIT_MESSAGE" value="zavrseno pozicioniranje" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="23" />
+      <option name="time" value="28" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -406,21 +375,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="26" selection-start-line="26" selection-end-line="26" />
-          <folding>
-            <element signature="n#!!block;n#createTargetProperties#0;n#createTargetProperties#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#colorSelectedShip#0;n#colorSelectedShip#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#rotateOrMoveShip#0;n#rotateOrMoveShip#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#doSomething#0;n#doSomething#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#createNewMovedPosition#0;n#createNewMovedPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#createNewRotatedPosition#0;n#createNewRotatedPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#addTranslatedShip#0;n#addTranslatedShip#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#removeOldPosition#0;n#removeOldPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#updateReservedSpace#0;n#updateReservedSpace#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#returnOldPosition#0;n#returnOldPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#isPositionEmpty#0;n#isPositionEmpty#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#addReservedSpace#0;n#addReservedSpace#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#randomShipsPosition#0;n#randomShipsPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -449,21 +403,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="26" selection-start-line="26" selection-end-line="26" />
-          <folding>
-            <element signature="n#!!block;n#createTargetProperties#0;n#createTargetProperties#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#colorSelectedShip#0;n#colorSelectedShip#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#rotateOrMoveShip#0;n#rotateOrMoveShip#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#doSomething#0;n#doSomething#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#createNewMovedPosition#0;n#createNewMovedPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#createNewRotatedPosition#0;n#createNewRotatedPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#addTranslatedShip#0;n#addTranslatedShip#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#removeOldPosition#0;n#removeOldPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#updateReservedSpace#0;n#updateReservedSpace#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#returnOldPosition#0;n#returnOldPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#isPositionEmpty#0;n#isPositionEmpty#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#addReservedSpace#0;n#addReservedSpace#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#randomShipsPosition#0;n#randomShipsPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -604,13 +543,6 @@
     <entry file="file://$PROJECT_DIR$/brodici.js" />
     <entry file="file://$PROJECT_DIR$/tableSetup.js" />
     <entry file="file://$PROJECT_DIR$/brodici.css" />
-    <entry file="file://$PROJECT_DIR$/style/brodici.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="55" column="14" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -625,42 +557,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/style/brodici.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="55" column="14" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/tableSetup.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="61" column="73" selection-start-line="61" selection-start-column="73" selection-end-line="61" selection-end-column="73" />
+        <state relative-caret-position="408">
+          <caret line="59" selection-start-line="59" selection-end-line="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/brodici.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="99" column="94" selection-start-line="99" selection-start-column="94" selection-end-line="99" selection-end-column="94" />
           <folding>
-            <element signature="n#!!block;n#createTargetProperties#0;n#createTargetProperties#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#colorSelectedShip#0;n#colorSelectedShip#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#rotateOrMoveShip#0;n#rotateOrMoveShip#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#doSomething#0;n#doSomething#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#createNewMovedPosition#0;n#createNewMovedPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#createNewRotatedPosition#0;n#createNewRotatedPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#addTranslatedShip#0;n#addTranslatedShip#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#removeOldPosition#0;n#removeOldPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#updateReservedSpace#0;n#updateReservedSpace#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#returnOldPosition#0;n#returnOldPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#isPositionEmpty#0;n#isPositionEmpty#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#addReservedSpace#0;n#addReservedSpace#0;n#!!block;n#tableSetup#0;n#!!top" />
-            <element signature="n#!!block;n#randomShipsPosition#0;n#randomShipsPosition#0;n#!!block;n#tableSetup#0;n#!!top" />
+            <element signature="e#402#682#0" />
+            <element signature="n#!!block;n#startTheBattle#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/brodici.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="40" column="34" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/brodici.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="74" column="77" lean-forward="true" selection-start-line="74" selection-start-column="77" selection-end-line="74" selection-end-column="77" />
-          <folding>
-            <element signature="e#4251#4301#0" />
-          </folding>
+        <state relative-caret-position="544">
+          <caret line="32" column="22" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
         </state>
       </provider>
     </entry>

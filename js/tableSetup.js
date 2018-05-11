@@ -36,7 +36,6 @@ let tableSetup = {
     },
 
     rotateOrMoveShip: function (table, shipPosition, event, targetProperties, rotateOrMove) {
-        console.log("rotateOrMoveShip");
         if (rotateOrMove === "rotate" ){
             targetProperties.newPosition = this.createNewRotatedPosition(targetProperties)
         } else if(rotateOrMove === "move") {
@@ -49,18 +48,15 @@ let tableSetup = {
             let newTableAndShip = this.addTranslatedShip(table, shipPosition, targetProperties, rotateOrMove);
             table = newTableAndShip.table;
             shipPosition = newTableAndShip.shipPosition;
-            console.log("translated returned");
         } else {
             let oldTableAndShip = this.returnOldPosition(table, shipPosition, targetProperties);
             table= oldTableAndShip.table;
             shipPosition = oldTableAndShip.shipPosition;
-            console.log("old returned");
         }
         return {table, shipPosition};
     },
 
     doSomething: function (table, shipPosition, event, targetProperties) {
-        console.log("doSomething");
         let rotateOrMove;
         if (event.button === 0) {
             rotateOrMove = "move";

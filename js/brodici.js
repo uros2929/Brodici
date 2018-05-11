@@ -95,10 +95,9 @@ function drawOnPage(table, player) {
         let rowInTable = document.createElement("tr");
         for (let cell = 0; cell < table[row].length; cell++) {
             let cellInRow = document.createElement("td");
-            if (table[row][cell] === labels.emptySpace) cellInRow.style.backgroundColor = "white";
+            if (table[row][cell] === labels.emptySpace || table[row][cell] === labels.reservedSpace) cellInRow.style.backgroundColor = "white";
             if (table[row][cell] === labels.ship) cellInRow.style.backgroundColor = "black";
-            if (table[row][cell] === labels.reservedSpace) cellInRow.style.backgroundColor = "white"; //samo za testiranje
-            if (table[row][cell] === labels.selectedShip) cellInRow.style.border = "solid yellow 1px";
+            if (table[row][cell] === labels.selectedShip) cellInRow.style.border = "solid blue 1px";
             if (table[row][cell] === labels.selectedShip) cellInRow.style.backgroundColor = "yellow";
             cellInRow.setAttribute("id", row + "_" + cell);
             rowInTable.appendChild(cellInRow);
